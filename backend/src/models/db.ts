@@ -9,7 +9,6 @@ const dbConnection = async ()=>{
     try {
         await mongoose.connect(dblink)
         console.log("db conected sucsesfully");
-        
     } catch (error) {
         console.log(error);
     }

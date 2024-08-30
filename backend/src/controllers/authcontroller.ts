@@ -8,7 +8,7 @@ import Statuscodes from "http-status-codes";
 import sendmail from "../mailer/passworedResetmailer";
 import { BadRequestError, NotFoundError, UnAuthenticatedError } from "../errors/index";
 import { validationResult } from "express-validator";
-import { error } from "winston";
+
 
 dbConnection();
 
@@ -63,8 +63,12 @@ export const signin = async (req: Request, res: Response) => {
 export const frgetPasswored = async (req: Request, res: Response) => {
     const { email } = req.body;
     const user: any = await User.findOne({ email });
+    // console.log(user);
+    
     const userId: string = user._id;
-    const userEmail: string = user.Email;
+    const userEmail: string = user.email;
+    console.log(userEmail);
+    
     const link: string = `api/auth/reset/${userId}`;
     sendmail(userEmail, "passwored reset", link)
     return res.status(Statuscodes.OK).json({ message: "password reset link sent to your email" });

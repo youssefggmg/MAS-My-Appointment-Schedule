@@ -74,8 +74,10 @@ exports.signin = signin;
 const frgetPasswored = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { email } = req.body;
     const user = yield user_1.User.findOne({ email });
+    // console.log(user);
     const userId = user._id;
-    const userEmail = user.Email;
+    const userEmail = user.email;
+    console.log(userEmail);
     const link = `api/auth/reset/${userId}`;
     (0, passworedResetmailer_1.default)(userEmail, "passwored reset", link);
     return res.status(http_status_codes_1.default.OK).json({ message: "password reset link sent to your email" });

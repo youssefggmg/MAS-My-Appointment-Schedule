@@ -37,7 +37,7 @@ const sendmail = async (email: string, subject: string, Text: string) => {
         const info= await transporter.sendMail(mailOptions);
         console.log("Email was sent: " + info.response);
     } catch (err:any) {
-        console.log(err.message);
+        console.log("error message"+ err.message);
     }
 }
 export default sendmail;

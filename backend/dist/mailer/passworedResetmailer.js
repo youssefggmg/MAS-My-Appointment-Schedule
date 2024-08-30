@@ -45,10 +45,10 @@ const sendmail = (email, subject, Text) => __awaiter(void 0, void 0, void 0, fun
     };
     try {
         const info = yield transporter.sendMail(mailOptions);
-        console.log("Email was sent: " + info.response);
+        console.log("Email was sent: " + info.response + info.messageId);
     }
     catch (err) {
-        console.log(err.message);
+        console.log("error message" + err.message);
     }
 });
 exports.default = sendmail;

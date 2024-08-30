@@ -13,3 +13,4 @@ class BadRequestError extends Error {
     }
 }
 exports.default = BadRequestError;
+//# sourceMappingURL=bad-request.js.map

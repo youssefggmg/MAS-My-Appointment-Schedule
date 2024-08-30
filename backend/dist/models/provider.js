@@ -9,3 +9,4 @@ const providerSchema = new mongoose_1.Schema({
     createdAt: { type: Date, default: Date.now }
 });
 exports.provider = (0, mongoose_1.model)('Provider', providerSchema);
+//# sourceMappingURL=provider.js.map

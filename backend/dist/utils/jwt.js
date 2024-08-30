@@ -22,3 +22,4 @@ const createtoken = (user) => __awaiter(void 0, void 0, void 0, function* () {
     return signtoken;
 });
 exports.createtoken = createtoken;
+//# sourceMappingURL=jwt.js.map

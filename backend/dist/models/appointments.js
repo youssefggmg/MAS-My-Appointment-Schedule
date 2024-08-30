@@ -12,3 +12,4 @@ const appointmentSchema = new mongoose_1.Schema({
     createdAt: { type: Date, default: Date.now }
 });
 exports.appointment = (0, mongoose_1.model)('Appointment', appointmentSchema);
+//# sourceMappingURL=appointments.js.map

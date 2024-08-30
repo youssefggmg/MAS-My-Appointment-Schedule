@@ -11,3 +11,4 @@ const reportSchema = new mongoose_1.Schema({
     createdAt: { type: Date, default: Date.now }
 });
 exports.Report = (0, mongoose_1.model)('Report', reportSchema);
+//# sourceMappingURL=report.js.map

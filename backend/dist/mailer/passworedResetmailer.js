@@ -45,10 +45,11 @@ const sendmail = (email, subject, Text) => __awaiter(void 0, void 0, void 0, fun
     };
     try {
         const info = yield transporter.sendMail(mailOptions);
-        console.log("Email was sent: " + info.response + info.messageId);
+        console.log("Email was sent: " + info.response);
     }
     catch (err) {
         console.log("error message" + err.message);
     }
 });
 exports.default = sendmail;
+//# sourceMappingURL=passworedResetmailer.js.map

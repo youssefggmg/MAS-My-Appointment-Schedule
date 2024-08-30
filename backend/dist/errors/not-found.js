@@ -13,3 +13,4 @@ class NotFoundError extends Error {
     }
 }
 exports.default = NotFoundError;
+//# sourceMappingURL=not-found.js.map

@@ -12,3 +12,4 @@ exports.logeInValidator = [
     (0, express_validator_1.body)("email").isEmail().not().isEmpty().withMessage({ error: "youmust enter email" }),
     (0, express_validator_1.body)("password").isLength({ min: 6 }).not().isEmpty().withMessage({ error: "password must be 6 charecters at leat" })
 ];
+//# sourceMappingURL=authValidators.js.map

@@ -13,3 +13,4 @@ class UnAuthenticatedError extends Error {
     }
 }
 exports.default = UnAuthenticatedError;
+//# sourceMappingURL=unauthenticated.js.map

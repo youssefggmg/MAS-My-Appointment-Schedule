@@ -12,3 +12,4 @@ const UserSchema = new mongoose_1.Schema({
     cancelledAppointments: { type: Number, default: 0 }
 });
 exports.User = (0, mongoose_1.model)("User", UserSchema);
+//# sourceMappingURL=user.js.map

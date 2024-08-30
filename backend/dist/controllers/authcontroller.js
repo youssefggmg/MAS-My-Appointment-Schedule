@@ -101,3 +101,4 @@ const changePasswored = (req, res) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.changePasswored = changePasswored;
+//# sourceMappingURL=authcontroller.js.map

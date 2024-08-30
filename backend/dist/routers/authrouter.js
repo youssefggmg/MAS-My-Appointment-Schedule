@@ -12,3 +12,4 @@ authrouter.route("/signin").post(authValidators_1.logeInValidator, authcontrolle
 authrouter.route("/forgetpassword").post(authcontroller_1.frgetPasswored);
 authrouter.route("/changepassword/:id").post(authcontroller_1.changePasswored);
 exports.default = authrouter;
+//# sourceMappingURL=authrouter.js.map

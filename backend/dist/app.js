@@ -12,3 +12,4 @@ const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use("/api/auth", authrouter_1.default);
 app.listen(port, () => { console.log(`server is running on port ${port}`); });
+//# sourceMappingURL=app.js.map

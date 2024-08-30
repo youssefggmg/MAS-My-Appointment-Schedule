@@ -12,3 +12,4 @@ const serviceSchema = new mongoose_1.Schema({
     contactMethod: { type: String, required: true }
 });
 exports.service = (0, mongoose_1.model)('Service', serviceSchema);
+//# sourceMappingURL=service.js.map

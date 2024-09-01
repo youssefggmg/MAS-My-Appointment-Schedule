@@ -7,6 +7,7 @@ const UserSchema = new mongoose_1.Schema({
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     phoneNumber: { type: String, required: true },
+    Image: { type: String },
     services: [{ type: mongoose_1.Schema.Types.ObjectId, ref: 'Service' }],
     subscriptionActive: { type: Boolean, default: false },
     role: { type: String, enum: ['user', 'provider', 'admin'], default: 'user' },

@@ -24,9 +24,10 @@ const allproviders = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         }
         console.log(providers);
         const allServices = yield service_1.service.find({
-            providerId: { $in: providers.map((porvider) => { providers._id; }) },
+            providerId: { $in: providers.map((provider) => { provider._id; }) },
             subscriptionActive: true
         });
+        res.status(http_status_codes_1.StatusCodes.OK).json({ providers, allServices });
     }
     catch (err) {
         console.log(err);

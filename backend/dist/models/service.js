@@ -7,6 +7,7 @@ const serviceSchema = new mongoose_1.Schema({
     name: { type: String, required: true },
     description: { type: String, required: true },
     workTime: { type: String, required: true },
+    city: { type: String, required: true },
     availability: { type: Boolean, default: true },
     price: { type: Number, required: true },
     contactMethod: { type: String, required: true }

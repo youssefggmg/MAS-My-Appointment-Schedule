@@ -4,7 +4,7 @@ import { compairPassword } from "../utils/compairpasswored";
 import { createtoken } from "../utils/jwt";
 import { User } from "../models/user";
 import dbConnection from "../models/db";
-import Statuscodes from "http-status-codes";
+import { StatusCodes } from "http-status-codes";
 import sendmail from "../mailer/passworedResetmailer";
 import { BadRequestError, NotFoundError, UnAuthenticatedError } from "../errors/index";
 import { validationResult } from "express-validator";
@@ -18,7 +18,7 @@ export const signup = async (req: Request, res: Response) => {
         const { name, email, password, phoneNumber } = req.body;
         const error = validationResult(req);
         if (!error.isEmpty()) {
-            res.status(Statuscodes.BAD_REQUEST).json({ error: error.array() })
+            res.status(StatusCodes.BAD_REQUEST).json({ error: error.array() })
         }
         const hashedPassword = await hashPassword(password);
         const user = await User.create({
@@ -30,10 +30,10 @@ export const signup = async (req: Request, res: Response) => {
         const token = await createtoken(user);
         console.log(token);
         
-        res.status(Statuscodes.CREATED).json({ token: token })
+        res.status(StatusCodes.CREATED).json({ token: token })
     } catch (err: any) {
         console.log(err)
-        res.status(Statuscodes.INTERNAL_SERVER_ERROR).json({ error: err.message })
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: err.message })
     }
 }
 
@@ -42,21 +42,21 @@ export const signin = async (req: Request, res: Response) => {
         const { email, password } = req.body;
         const error = validationResult(req);
         if (!error.isEmpty()) {
-            res.status(Statuscodes.BAD_REQUEST).json({ error: error.array() })
+            res.status(StatusCodes.BAD_REQUEST).json({ error: error.array() })
         }
         const user = await User.findOne({ email });
         if (!user) {
-            return res.status(Statuscodes.BAD_REQUEST).json({ error: new BadRequestError("something is wrong try again") });
+            return res.status(StatusCodes.BAD_REQUEST).json({ error: new BadRequestError("something is wrong try again") });
         }
         const Match = await compairPassword(password, user.password);
         if (!Match) {
-            return res.status(Statuscodes.BAD_REQUEST).json({ error: new BadRequestError("something is wrong try again") });
+            return res.status(StatusCodes.BAD_REQUEST).json({ error: new BadRequestError("something is wrong try again") });
         }
         const token = await createtoken(user);
-        res.status(Statuscodes.OK).json({ token })
+        res.status(StatusCodes.OK).json({ token })
     } catch (err: any) {
         console.log(err)
-        res.status(Statuscodes.INTERNAL_SERVER_ERROR).json({ error: err.message })
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: err.message })
     }
 }
 
@@ -71,7 +71,7 @@ export const frgetPasswored = async (req: Request, res: Response) => {
     
     const link: string = `api/auth/reset/${userId}`;
     sendmail(userEmail, "passwored reset", link)
-    return res.status(Statuscodes.OK).json({ message: "password reset link sent to your email" });
+    return res.status(StatusCodes.OK).json({ message: "password reset link sent to your email" });
 
 }
 
@@ -85,9 +85,9 @@ export const changePasswored = async (req: Request, res: Response) => {
         const hashedPassword = await hashPassword(password);
         user.password = hashedPassword!;
         await user.save();
-        res.status(Statuscodes.OK).json({ message: "password changed successfully" })
+        res.status(StatusCodes.OK).json({ message: "password changed successfully" })
     } catch (err: any) {
         console.log(err)
-        res.status(Statuscodes.INTERNAL_SERVER_ERROR).json({ error: err.message })
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: err.message })
     }
 }

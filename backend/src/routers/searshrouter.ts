@@ -3,10 +3,10 @@ import { searchByCity,searchByProviderName,searchByavailability,searchByserviceN
 
 const searchrout = express.Router()
 
-searchrout.route("search/:name").get(searchByProviderName);
-searchrout.route("search/:city").get(searchByCity);
-searchrout.route("search/:availability").get(searchByavailability);
-searchrout.route("search/:availability").get(searchByserviceName);
+searchrout.route("/search/:name").get(searchByProviderName);
+searchrout.route("/search/:city").get(searchByCity);
+searchrout.route("/search/:availability").get(searchByavailability);
+searchrout.route("/search/:availability").get(searchByserviceName);
 
 export default searchrout
 

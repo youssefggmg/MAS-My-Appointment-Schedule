@@ -3,19 +3,19 @@ import { hashPassword } from "../utils/hachPassword";
 import { compairPassword } from "../utils/compairpasswored";
 import { createtoken } from "../utils/jwt";
 import { User } from "../models/user";
-import dbConnection from "../models/db";
 import { StatusCodes } from "http-status-codes";
 import sendmail from "../mailer/passworedResetmailer";
 import { BadRequestError, NotFoundError, UnAuthenticatedError } from "../errors/index";
 import { validationResult } from "express-validator";
 
 
-dbConnection();
+
 
 
 export const signup = async (req: Request, res: Response) => {
     try {
         const { name, email, password, phoneNumber } = req.body;
+        
         const error = validationResult(req);
         if (!error.isEmpty()) {
             res.status(StatusCodes.BAD_REQUEST).json({ error: error.array() })

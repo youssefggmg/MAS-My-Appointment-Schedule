@@ -3,7 +3,8 @@ import { User } from "../models/user";
 import { service } from "../models/service";
 import { StatusCodes } from "http-status-codes";
 import { BadRequestError, NotFoundError, UnAuthenticatedError } from "../errors/index";
-import dbConnection from "../models/db";
+
+
 
 
 export const searchByProviderName = async (req: Request, res: Response) => {

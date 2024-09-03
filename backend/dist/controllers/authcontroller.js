@@ -17,12 +17,10 @@ const hachPassword_1 = require("../utils/hachPassword");
 const compairpasswored_1 = require("../utils/compairpasswored");
 const jwt_1 = require("../utils/jwt");
 const user_1 = require("../models/user");
-const db_1 = __importDefault(require("../models/db"));
 const http_status_codes_1 = require("http-status-codes");
 const passworedResetmailer_1 = __importDefault(require("../mailer/passworedResetmailer"));
 const index_1 = require("../errors/index");
 const express_validator_1 = require("express-validator");
-(0, db_1.default)();
 const signup = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name, email, password, phoneNumber } = req.body;

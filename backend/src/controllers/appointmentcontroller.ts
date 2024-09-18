@@ -57,3 +57,16 @@ export const cancelAppointment = async (req: Request, res: Response) => {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: err.message })
     }
 }
+
+export const allApoointmets = async (req: Request, res: Response) => {
+    try {
+        const userID = req.user.user._id;
+        const allApoointmets = await appointment.find({
+            userId: userID
+        })
+        return res.status(StatusCodes.OK).json({ allApoointmets });
+    } catch (err: any) {
+        console.log(err)
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: err.message })
+    }
+}

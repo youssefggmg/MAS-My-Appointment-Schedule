@@ -19,6 +19,7 @@ export const userinfo = async (req: Request, res: Response) => {
     }
 }
 
+// remake this one 
 export const updateuserinfo = async (req: Request, res: Response) => {
     try {
         const user = req.user;
@@ -26,6 +27,10 @@ export const updateuserinfo = async (req: Request, res: Response) => {
         // Ensure req.user exists
         if (!user || !user.user) {
             return res.status(StatusCodes.UNAUTHORIZED).json(new UnAuthenticatedError("User not authenticated"));
+        }
+        // Ensure req.file exists
+        if (!req.file) {
+            return res.status(StatusCodes.BAD_REQUEST).json(new BadRequestError("Please provide a valid image"));
         }
 
         const userID: string = user.user._id;
@@ -41,13 +46,14 @@ export const updateuserinfo = async (req: Request, res: Response) => {
             return res.status(StatusCodes.BAD_REQUEST).json(new BadRequestError("Invalid input"));
         }
 
-        const updateData: any = req.body 
+        const {name,password,phoneNumber}: any = req.body;
+        const {Image}:any = req.file.path;
         
 
         // Update the user document with the provided fields
         const updatedUser = await User.findByIdAndUpdate(
             userID,
-            { $set: updateData },
+            { $set: name,password,phoneNumber,Image },
             { new: true }
         );
         console.log("UPDAYED");

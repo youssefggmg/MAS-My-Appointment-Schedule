@@ -6,6 +6,7 @@ import searchrout from "./routers/searshrouter";
 import userRouter from "./routers/userrout";
 import appointmetRouter from "./routers/userAppontmentrout";
 import becomeProviderRouter from "./routers/becomeProviderRouter";
+import servicerouter from "./routers/provider/serviceRouter";
 import dbConnection from "./models/db";
 dbConnection();
 dotenv.config()
@@ -21,6 +22,7 @@ app.use("/api",searchrout);
 app.use("/api",userRouter);
 app.use("/api",appointmetRouter);
 app.use("/api",becomeProviderRouter);
+app.use("/api",servicerouter);
 
 
 

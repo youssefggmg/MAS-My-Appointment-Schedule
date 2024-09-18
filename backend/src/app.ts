@@ -3,8 +3,10 @@ import dotenv from "dotenv";
 import authrouter from "./routers/authrouter";
 import dashboardrouter from "./routers/dashboardrout";
 import searchrout from "./routers/searshrouter";
-import dbConnection from "./models/db";
 import userRouter from "./routers/userrout";
+import appointmetRouter from "./routers/userAppontmentrout";
+import becomeProviderRouter from "./routers/becomeProviderRouter";
+import dbConnection from "./models/db";
 dbConnection();
 dotenv.config()
 
@@ -17,6 +19,8 @@ app.use("/api",authrouter);
 app.use("/api",dashboardrouter);
 app.use("/api",searchrout);
 app.use("/api",userRouter);
+app.use("/api",appointmetRouter);
+app.use("/api",becomeProviderRouter);
 
 
 

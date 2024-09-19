@@ -1,6 +1,5 @@
-import { NextFunction, Request, Response } from "express";
 import nodemailer from "nodemailer";
-import dotenv from "dotenv"
+import dotenv from "dotenv";
 dotenv.config();
 
 

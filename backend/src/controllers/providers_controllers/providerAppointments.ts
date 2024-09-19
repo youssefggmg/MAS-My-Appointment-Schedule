@@ -2,8 +2,10 @@ import { Request, Response } from "express";
 import { User } from "../../models/user";
 import { appointment } from "../../models/appointments";
 import { BadRequestError, NotFoundError, UnAuthenticatedError } from "../../errors/index";
+import { validationResult } from "express-validator";
 import { StatusCodes } from "http-status-codes";
 import { acceptedMail } from "../../mailer/appointmentAcceptedmail";
+import { sendCancelationEmail } from "../../mailer/appointmentCancelmail";
 
 
 
@@ -26,9 +28,13 @@ export const allApointments = async (req: Request, res: Response) => {
 
 export const accepteAppointment = async (req: Request, res: Response) => {
     try {
+        const errors = validationResult(req);
         const providerID = req.user.user._id;
         const appointmentID = req.params.id;
         const { notes, date } = req.body
+        if (!errors.isEmpty()) {
+            return res.status(StatusCodes.BAD_REQUEST).json({ errors: errors.array() });
+        }
         const Appointment = await appointment.findById({
             _id: appointmentID
         });
@@ -50,14 +56,14 @@ export const accepteAppointment = async (req: Request, res: Response) => {
             },
             { new: true }
         )
-        const clientID= Appointment.userId
+        const clientID = Appointment.userId
         const client = await User.findById(clientID)
         const provider = await User.findById(providerID)
         const clientMail = client?.email!;
         const clientName = client?.name!;
-        const providerName= provider?.name!;
+        const providerName = provider?.name!;
 
-        acceptedMail(clientMail,"appointment accepted",providerName,date,clientName);
+        acceptedMail(clientMail, "appointment accepted", providerName, date, clientName);
         res.status(StatusCodes.OK).json(accepted);
     } catch (err: any) {
         console.log(err)
@@ -67,12 +73,16 @@ export const accepteAppointment = async (req: Request, res: Response) => {
 
 export const cancellAppointment = async (req: Request, res: Response) => {
     try {
+        const errors = validationResult(req);
         const providerID = req.user.user._id;
         const appointmentID = req.params.id;
         const { notes, date } = req.body
         const Appointment = await appointment.findById({
             _id: appointmentID
         });
+        if (!errors.isEmpty()) {
+            return res.status(StatusCodes.BAD_REQUEST).json({ errors: errors.array() });
+        }
         if (!Appointment) {
             return res.status(StatusCodes.NOT_FOUND).json({ error: new NotFoundError('Appointment not found') });
         }
@@ -90,6 +100,13 @@ export const cancellAppointment = async (req: Request, res: Response) => {
             },
             { new: true }
         )
+        const clientID = Appointment.userId
+        const client = await User.findById(clientID)
+        const provider = await User.findById(providerID)
+        const clientMail = client?.email!;
+        const clientName = client?.name!;
+        const providerName = provider?.name!;
+        sendCancelationEmail(clientMail, "appointment cancelled", providerName, date, clientName);
         res.status(StatusCodes.OK).json(cancelled);
 
     } catch (err: any) {
@@ -97,3 +114,4 @@ export const cancellAppointment = async (req: Request, res: Response) => {
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: err.message })
     }
 }
+

@@ -8,6 +8,8 @@ import appointmetRouter from "./routers/userAppontmentrout";
 import becomeProviderRouter from "./routers/becomeProviderRouter";
 import servicerouter from "./routers/provider/serviceRouter";
 import dbConnection from "./models/db";
+import providerAppointmentsRoutere from "./routers/provider/appointments";
+
 dbConnection();
 dotenv.config()
 
@@ -23,6 +25,7 @@ app.use("/api",userRouter);
 app.use("/api",appointmetRouter);
 app.use("/api",becomeProviderRouter);
 app.use("/api",servicerouter);
+app.use("/api",providerAppointmentsRoutere);
 
 
 

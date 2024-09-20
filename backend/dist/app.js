@@ -14,6 +14,7 @@ const becomeProviderRouter_1 = __importDefault(require("./routers/becomeProvider
 const serviceRouter_1 = __importDefault(require("./routers/provider/serviceRouter"));
 const db_1 = __importDefault(require("./models/db"));
 const appointments_1 = __importDefault(require("./routers/provider/appointments"));
+const endsubscreption_1 = require("./cronejobs/endsubscreption");
 (0, db_1.default)();
 dotenv_1.default.config();
 const port = process.env.port || 3000;
@@ -27,5 +28,8 @@ app.use("/api", userAppontmentrout_1.default);
 app.use("/api", becomeProviderRouter_1.default);
 app.use("/api", serviceRouter_1.default);
 app.use("/api", appointments_1.default);
-app.listen(port, () => { console.log(`server is running on port ${port}`); });
+endsubscreption_1.crone.start();
+app.listen(port, () => {
+    console.log(`server is running on port ${port}`);
+});
 //# sourceMappingURL=app.js.map

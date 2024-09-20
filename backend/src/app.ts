@@ -9,6 +9,7 @@ import becomeProviderRouter from "./routers/becomeProviderRouter";
 import servicerouter from "./routers/provider/serviceRouter";
 import dbConnection from "./models/db";
 import providerAppointmentsRoutere from "./routers/provider/appointments";
+import { crone } from "./cronejobs/endsubscreption";
 
 dbConnection();
 dotenv.config()
@@ -28,5 +29,8 @@ app.use("/api",servicerouter);
 app.use("/api",providerAppointmentsRoutere);
 
 
+crone.start();
 
-app.listen(port,()=>{console.log(`server is running on port ${port}`)});
+app.listen(port,()=>{
+    console.log(`server is running on port ${port}`)
+});

@@ -4,8 +4,10 @@ import { allMyReports,removeReport,reportProvider} from "../controllers/reportpr
 import { isUser } from "../middlewares/isUser";
 
 
-const reportRouter = express.Router();
+const providerReportRout = express.Router();
 
-reportRouter.route("/report/getll").get(tockenVirification,isUser,allMyReports);
-reportRouter.route("/report/report").post(tockenVirification,isUser,reportProvider);
-reportRouter.route("/report/remouveReport").delete(tockenVirification,isUser,removeReport);
+providerReportRout.route("/report/getll").get(tockenVirification,isUser,allMyReports);
+providerReportRout.route("/report/report").post(tockenVirification,isUser,reportProvider);
+providerReportRout.route("/report/remouveReport").delete(tockenVirification,isUser,removeReport);
+
+export default providerReportRout

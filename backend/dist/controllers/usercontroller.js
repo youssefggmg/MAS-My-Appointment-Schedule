@@ -16,7 +16,7 @@ const express_validator_1 = require("express-validator");
 const http_status_codes_1 = require("http-status-codes");
 const userinfo = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = req.user;
+        const user = req.user.user;
         if (!user) {
             res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json(new index_1.UnAuthenticatedError('Please login first'));
         }
@@ -35,6 +35,10 @@ const updateuserinfo = (req, res) => __awaiter(void 0, void 0, void 0, function*
         if (!user || !user.user) {
             return res.status(http_status_codes_1.StatusCodes.UNAUTHORIZED).json(new index_1.UnAuthenticatedError("User not authenticated"));
         }
+        // Ensure req.file exists
+        if (!req.file) {
+            return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json(new index_1.BadRequestError("Please provide a valid image"));
+        }
         const userID = user.user._id;
         console.log("got the userid");
         const errors = (0, express_validator_1.validationResult)(req);
@@ -44,9 +48,11 @@ const updateuserinfo = (req, res) => __awaiter(void 0, void 0, void 0, function*
         if (!errors.isEmpty()) {
             return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json(new index_1.BadRequestError("Invalid input"));
         }
-        const updateData = req.body;
+        const { name, password, phoneNumber } = req.body;
+        const Image = req.file.path;
+        console.log(req.file);
         // Update the user document with the provided fields
-        const updatedUser = yield user_1.User.findByIdAndUpdate(userID, { $set: updateData }, { new: true });
+        const updatedUser = yield user_1.User.findByIdAndUpdate(userID, { $set: name, password, phoneNumber, Image }, { new: true });
         console.log("UPDAYED");
         if (!updatedUser) {
             return res.status(http_status_codes_1.StatusCodes.NOT_FOUND).json({ message: "User not found" });
@@ -54,8 +60,8 @@ const updateuserinfo = (req, res) => __awaiter(void 0, void 0, void 0, function*
         return res.status(http_status_codes_1.StatusCodes.OK).json({ message: "User info updated successfully", updatedUser });
     }
     catch (err) {
-        console.log(err);
-        return res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR).json({ error: err.message });
+        console.log(err, "hjkashdka");
+        return res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR).json({ error: err.message, dsad: "asda" });
     }
 });
 exports.updateuserinfo = updateuserinfo;

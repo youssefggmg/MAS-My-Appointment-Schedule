@@ -12,20 +12,20 @@ dotenv_1.default.config();
 const secritkey = process.env.jwtToken;
 const tockenVirification = (req, res, next) => {
     try {
-        console.log("started");
-        // console.log(secritkey);
+        // console.log("started")
         const { authorization } = req.headers;
         // console.log("token" + authorization);
         if (!authorization) {
             return res.status(http_status_codes_1.StatusCodes.UNAUTHORIZED).json({ error: new unauthenticated_1.default("no token provided ") });
         }
         const token = authorization.split(" ")[1];
+        // console.log("the token " ,token);
         if (!token) {
             return res.status(http_status_codes_1.StatusCodes.UNAUTHORIZED).json({ error: new unauthenticated_1.default("no token provided ") });
         }
         const payload = jsonwebtoken_1.default.verify(token, secritkey);
         req.user = payload;
-        // console.log(payload);
+        // console.log("complaited token ");
         next();
     }
     catch (error) {

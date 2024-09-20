@@ -8,7 +8,7 @@ import { StatusCodes } from "http-status-codes";
 
 export const userinfo = async (req: Request, res: Response) => {
     try {
-        const user = req.user;
+        const user = req.user.user;
         if (!user) {
             res.status(StatusCodes.BAD_REQUEST).json(new UnAuthenticatedError('Please login first'));
         }
@@ -19,7 +19,6 @@ export const userinfo = async (req: Request, res: Response) => {
     }
 }
 
-// remake this one 
 export const updateuserinfo = async (req: Request, res: Response) => {
     try {
         const user = req.user;
@@ -41,13 +40,16 @@ export const updateuserinfo = async (req: Request, res: Response) => {
         if (user.user.role !== "user") {
             return res.status(StatusCodes.FORBIDDEN).json(new UnAuthenticatedError("You are not authorized to update user info"));
         }
+        
 
         if (!errors.isEmpty()) {
             return res.status(StatusCodes.BAD_REQUEST).json(new BadRequestError("Invalid input"));
         }
+        
 
         const {name,password,phoneNumber}: any = req.body;
-        const {Image}:any = req.file.path;
+        const Image :any = req.file.path;
+        console.log(req.file);
         
 
         // Update the user document with the provided fields
@@ -65,8 +67,8 @@ export const updateuserinfo = async (req: Request, res: Response) => {
 
         return res.status(StatusCodes.OK).json({ message: "User info updated successfully", updatedUser });
     } catch (err: any) {
-        console.log(err);
-        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: err.message });
+        console.log(err,"hjkashdka");
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: err.message,dsad:"asda" });
     }
 };
 

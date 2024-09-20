@@ -5,6 +5,6 @@ import { becomeProvider } from "../controllers/providers_controllers/becomProvid
 
 const becomeProviderRouter = express.Router();
 
-becomeProviderRouter.route("/User/activate").post(tockenVirification,isUser,becomeProvider);
+becomeProviderRouter.route("/User/activate").patch(tockenVirification,isUser,becomeProvider);
 
 export default becomeProviderRouter

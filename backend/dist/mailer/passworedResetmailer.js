@@ -26,29 +26,37 @@ const transporter = nodemailer_1.default.createTransport({
         pass: SMTPpassword
     }
 });
-const sendmail = (email, subject, Text) => __awaiter(void 0, void 0, void 0, function* () {
+const sendmail = (email, subject, resetLink) => __awaiter(void 0, void 0, void 0, function* () {
     const mailOptions = {
         from: SMTPemail,
         to: email,
         subject: subject,
-        text: `Hi [User's Name],
-
-        We received a request to reset your password for your account. If you did not make this request, please ignore this email. Otherwise, you can reset your password using the link below:
-        
-        <a> ${Text}</a>
-        
-        For security reasons, this link will expire in 24 hours. If you encounter any issues, please contact our support team.
-        
-        Thank you, [Your Company Name] Support Team
-        
-        Feel free to customize it to better fit your needs! Let me know if you need any more help.`
+        html: `
+        <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f4f4f4; color: #333;">
+            <div style="max-width: 600px; margin: 0 auto; background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                <h2 style="text-align: center; color: #007BFF;">Password Reset Request</h2>
+                <p>Hi [User's Name],</p>
+                <p>We received a request to reset your password for your account. If you did not make this request, please ignore this email.</p>
+                <p>Otherwise, you can reset your password by clicking the link below:</p>
+                
+                <div style="text-align: center; margin: 20px 0;">
+                    <a href="${resetLink}" style="text-decoration: none; background-color: #007BFF; color: white; padding: 12px 20px; border-radius: 5px; font-weight: bold;">Reset Password</a>
+                </div>
+                
+                <p style="color: #555;">For security reasons, this link will expire in 24 hours. If you encounter any issues, please contact our support team.</p>
+                <p>Thank you,<br><strong>[Your Company Name] Support Team</strong></p>
+                <hr style="border: none; border-top: 1px solid #eee;">
+                <p style="font-size: 12px; text-align: center; color: #999;">This is an automated email, please do not reply.</p>
+            </div>
+        </div>
+        `
     };
     try {
         const info = yield transporter.sendMail(mailOptions);
         console.log("Email was sent: " + info.response);
     }
     catch (err) {
-        console.log("error message" + err.message);
+        console.log("Error message: " + err.message);
     }
 });
 exports.default = sendmail;

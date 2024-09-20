@@ -14,24 +14,25 @@ const user_1 = require("../models/user");
 const service_1 = require("../models/service");
 const http_status_codes_1 = require("http-status-codes");
 const allproviders = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // I did not want to use any but nothing else worke 
     try {
+        // Find all users with the 'provider' role
         const providers = yield user_1.User.find({
             role: "provider"
         });
-        if (!providers) {
-            res.status(http_status_codes_1.StatusCodes.NOT_FOUND).json({ error: "sory we have no providers yet 😔😓" });
+        if (providers.length === 0) {
+            return res.status(http_status_codes_1.StatusCodes.NOT_FOUND).json({ error: "Sorry, we have no providers yet 😔😓" });
         }
-        console.log(providers);
+        // Find all services where providerId matches any of the provider IDs and the subscription is active
         const allServices = yield service_1.service.find({
-            providerId: { $in: providers.map((provider) => { provider._id; }) },
+            providerId: { $in: providers.map((provider) => provider._id) },
             subscriptionActive: true
         });
-        res.status(http_status_codes_1.StatusCodes.OK).json({ providers, allServices });
+        // Respond with both the providers and their services
+        return res.status(http_status_codes_1.StatusCodes.OK).json({ providers, allServices });
     }
     catch (err) {
-        console.log(err);
-        res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR).json({ error: err.message });
+        console.error("Error fetching providers or services:", err);
+        return res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR).json({ error: err.message });
     }
 });
 exports.allproviders = allproviders;

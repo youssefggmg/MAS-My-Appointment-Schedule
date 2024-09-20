@@ -11,23 +11,21 @@ const secritkey: string = process.env.jwtToken!;
 
 export const tockenVirification = (req: Request, res: Response, next: NextFunction) => {
     try {
-        console.log("started")
-        // console.log(secritkey);
-        
-        
+        // console.log("started")
         const { authorization } = req.headers!;
         // console.log("token" + authorization);
         if (!authorization) {
             return res.status(StatusCodes.UNAUTHORIZED).json({ error: new UnAuthenticatedError("no token provided ") });
         }
         const token = authorization.split(" ")[1];
+        // console.log("the token " ,token);
         if (!token) {
             return res.status(StatusCodes.UNAUTHORIZED).json({ error: new UnAuthenticatedError("no token provided ") });
         }
-        const payload = jwt.verify(token, secritkey as string ) as JwtPayload;
+        const payload = jwt.verify(token, secritkey as string) as JwtPayload;
         req.user = payload;
-        // console.log(payload);
         
+        // console.log("complaited token ");
         next();
     } catch (error: any) {
         // console.log(error.message);

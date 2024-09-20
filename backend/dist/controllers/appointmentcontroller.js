@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.cancelAppointment = exports.bookAppointment = void 0;
+exports.allApoointmets = exports.cancelAppointment = exports.bookAppointment = void 0;
 const appointments_1 = require("../models/appointments");
 const user_1 = require("../models/user");
 const service_1 = require("../models/service");
@@ -52,7 +52,7 @@ const cancelAppointment = (req, res) => __awaiter(void 0, void 0, void 0, functi
         // nocapp means number numberOfCancelledAppointments
         const nocapp = { cancelledAppointments: user.cancelledAppointments++ };
         if (nocapp > 3) {
-            return res.status(http_status_codes_1.StatusCodes.NOT_FOUND).json({ error: new index_1.NotFoundError("you have reatched you lemit you cannot cancella nother appointment") });
+            return res.status(http_status_codes_1.StatusCodes.NOT_FOUND).json({ error: new index_1.NotFoundError("you have reatched you limet you cannot cancella nother appointment") });
         }
         const status = { status: "cancelled" };
         if (!theAppointment) {
@@ -68,4 +68,18 @@ const cancelAppointment = (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.cancelAppointment = cancelAppointment;
+const allApoointmets = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const userID = req.user.user._id;
+        const allApoointmets = yield appointments_1.appointment.find({
+            userId: userID
+        });
+        return res.status(http_status_codes_1.StatusCodes.OK).json({ allApoointmets });
+    }
+    catch (err) {
+        console.log(err);
+        res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR).json({ error: err.message });
+    }
+});
+exports.allApoointmets = allApoointmets;
 //# sourceMappingURL=appointmentcontroller.js.map

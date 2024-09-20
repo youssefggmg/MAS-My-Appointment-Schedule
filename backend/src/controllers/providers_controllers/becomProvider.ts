@@ -6,9 +6,17 @@ import mongoose from "mongoose";
 
 export const becomeProvider = async (req: Request, res: Response) => {
     try {
-        const {user} = req.user.user
-        const provider= await User.findByIdAndUpdate({_id:user._id},
-            {$set:{isProvider:true}},
+        const user = req.user.user
+        // Calculate the new subscription end date (1 month from now)
+        const currentDate = new Date();
+        const subscriptionEndDate = new Date(currentDate.setMonth(currentDate.getMonth() + 1));
+        const provider= await User.findByIdAndUpdate(
+            user._id,
+            {$set:{role:"provider",
+                subscriptionEndDate,
+                subscriptionStatus:true,
+            }},
+            { new: true }
         );
         res.status(StatusCodes.OK).json({message:`you have become a service ${user.name} provider`});
     } catch (err: any) {

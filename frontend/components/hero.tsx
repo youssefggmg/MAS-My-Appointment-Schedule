@@ -19,7 +19,7 @@ export default function Hero() {
                 <a className="btn text-black bg-[#6FB7FF] hover:bg-purple-700 w-full mb-4 sm:w-auto sm:mb-0" href="/signup">creat your acount </a>
               </div>
               <div data-aos="fade-up" data-aos-delay="600">
-                <a className="btn text-black bg-[#20C997] hover:bg-gray-800 w-full sm:w-auto sm:ml-4" href="#0">Learn more</a>
+                <a className="btn text-black bg-[#20C997] hover:bg-gray-800 w-full sm:w-auto sm:ml-4" href="about">Learn more</a>
               </div>
             </div>
           </div>

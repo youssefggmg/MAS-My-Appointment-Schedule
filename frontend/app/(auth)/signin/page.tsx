@@ -25,7 +25,7 @@ export default function SignIn() {
     }
     else {
       const token = resolt.data.token
-      console.log(token);
+      localStorage.setItem("token", JSON.stringify(token));
     }
   };
 
@@ -70,7 +70,7 @@ export default function SignIn() {
               <div className="flex flex-wrap -mx-3 mb-4">
                 <div className="w-full px-3">
                   <div className="flex justify-between">
-                    {error&&<p className="text-red-600 text-sm mt-1">{error}</p>}
+                    {error && <p className="text-red-600 text-sm mt-1">{error}</p>}
                     <Link href="/reset-password" className="text-purple-600 hover:text-gray-200 transition duration-150 ease-in-out">Forgot Password?</Link>
                   </div>
                 </div>

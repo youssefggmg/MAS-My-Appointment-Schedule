@@ -17,7 +17,8 @@ export default function SignUp() {
   const onSubmit:SubmitHandler<SignUpFormData> = async (data:SignUpFormData) => {
     console.log(data);
     const resolt= await createAcount(data);
-    console.log(resolt);
+    const token = resolt.data.token;
+    localStorage.setItem("token",JSON.stringify(token));
   };
 
   return (

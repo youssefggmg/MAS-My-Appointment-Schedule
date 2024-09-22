@@ -69,10 +69,10 @@ export const frgetPasswored = async (req: Request, res: Response) => {
     const userEmail: string = user.email;
     console.log(userEmail);
     
-    const link: string = `api/auth/reset/${userId}`;
+    const link: string = `http://localhost:3000/reset/${userId}`;
     sendmail(userEmail, "passwored reset", link)
+    console.log("email was sent");
     return res.status(StatusCodes.OK).json({ message: "password reset link sent to your email" });
-
 }
 
 export const changePasswored = async (req: Request, res: Response) => {

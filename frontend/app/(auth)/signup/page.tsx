@@ -2,20 +2,22 @@
 import {SubmitHandler, useForm } from 'react-hook-form';
 import Header from '@/components/ui/header';
 import Link from 'next/link';
+import { createAcount } from '@/serveractions/auth';
 
 
 export default function SignUp() {
   interface SignUpFormData {
-    fullName: string;
+    name: string;
     phoneNumber: string;
     email: string;
     password: string;
   }
   const { register, handleSubmit, formState: { errors } } = useForm<SignUpFormData>();
   
-  const onSubmit:SubmitHandler<SignUpFormData> = (data:SignUpFormData) => {
+  const onSubmit:SubmitHandler<SignUpFormData> = async (data:SignUpFormData) => {
     console.log(data);
-    // handle sign up logic here
+    const resolt= await createAcount(data);
+    console.log(resolt);
   };
 
   return (
@@ -42,9 +44,9 @@ export default function SignUp() {
                       type="text"
                       className="form-input w-full text-gray-300"
                       placeholder="First and last name"
-                      {...register('fullName', { required: 'Full name is required' })}
+                      {...register('name', { required: 'Full name is required' })}
                     />
-                    {errors.fullName && <p className="text-red-600">{errors.fullName.message}</p>}
+                    {errors.name && <p className="text-red-600">{errors.name.message}</p>}
                   </div>
                 </div>
 

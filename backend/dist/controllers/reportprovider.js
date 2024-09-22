@@ -55,6 +55,9 @@ const removeReport = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         if (!report) {
             res.status(http_status_codes_1.StatusCodes.NOT_FOUND).json(new index_1.NotFoundError('Report not found'));
         }
+        if ((report === null || report === void 0 ? void 0 : report.reporterId) !== user._id) {
+            return res.status(http_status_codes_1.StatusCodes.UNAUTHORIZED).json({ error: 'You are not authorized to delete this report' });
+        }
         const removeReport = yield report_1.Report.findByIdAndDelete(reportID);
         res.status(http_status_codes_1.StatusCodes.OK).json({ message: 'Report removed successfully' });
     }

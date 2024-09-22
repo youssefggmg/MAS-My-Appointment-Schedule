@@ -1,11 +1,25 @@
-export const metadata = {
-  title: 'Reset Password - Open PRO',
-  description: 'Page description',
-}
+"use client";
 
 import Link from 'next/link'
+import { useForm, SubmitHandler } from 'react-hook-form';
+import { useState } from 'react';
+import { forgetPassword } from '@/serveractions/auth';
+
+interface ResetPasswordFormData {
+  email: string;
+}
 
 export default function ResetPassword() {
+  const { register, handleSubmit, formState: { errors } } = useForm<ResetPasswordFormData>();
+  const [sent, setSent] = useState(false);
+
+  const onSubmit: SubmitHandler<ResetPasswordFormData> = async (data) => {
+    const resolte:any = await forgetPassword(data);
+    if (resolte.success) {
+      setSent(true);
+    }
+  };
+
   return (
     <section className="relative">
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
@@ -19,16 +33,31 @@ export default function ResetPassword() {
 
           {/* Form */}
           <div className="max-w-sm mx-auto">
-            <form>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="flex flex-wrap -mx-3 mb-4">
                 <div className="w-full px-3">
                   <label className="block text-gray-300 text-sm font-medium mb-1" htmlFor="email">Email</label>
-                  <input id="email" type="email" className="form-input w-full text-gray-300" placeholder="you@yourcompany.com" required />
+                  <input 
+                    id="email" 
+                    type="email" 
+                    className="form-input w-full text-gray-300" 
+                    placeholder="you@yourcompany.com" 
+                    {...register("email", { 
+                      required: "Email is required", 
+                      pattern: { 
+                        value: /^\S+@\S+$/i, 
+                        message: "Invalid email address" 
+                      } 
+                    })} 
+                    required 
+                  />
+                  {errors.email && <p className="text-red-600 text-sm mt-1">{errors.email.message}</p>}
                 </div>
               </div>
+              {sent&&<p className="text-green-400 text-sm mt-1">we have sent an email to reset your password</p>}
               <div className="flex flex-wrap -mx-3 mt-6">
                 <div className="w-full px-3">
-                  <button className="btn text-white bg-purple-600 hover:bg-purple-700 w-full">Reset Password</button>
+                  <button type="submit" className="btn text-white bg-purple-600 hover:bg-purple-700 w-full">Reset Password</button>
                 </div>
               </div>
             </form>
@@ -36,9 +65,8 @@ export default function ResetPassword() {
               <Link href="/signin" className="text-purple-600 hover:text-gray-200 transition duration-150 ease-in-out">Cancel</Link>
             </div>
           </div>
-
         </div>
       </div>
     </section>
-  )
+  );
 }

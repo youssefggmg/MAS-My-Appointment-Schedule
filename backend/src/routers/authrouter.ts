@@ -9,7 +9,7 @@ const authrouter = express.Router();
 authrouter.route("/auth/signup").post(regesterValidator, signup);
 authrouter.route("/auth/signin").post(logeInValidator, signin);
 authrouter.route("/auth/forgetpassword").post(frgetPasswored);
-authrouter.route("/auth/changepassword/:id").post(changePasswored);
+authrouter.route("/auth/changepassword/:id").patch(changePasswored);
 
 
 export default authrouter;

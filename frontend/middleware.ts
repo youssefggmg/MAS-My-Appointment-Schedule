@@ -41,4 +41,6 @@ const middeleWare = async (req: NextRequest) => {
 export const config ={
     matcher: ['/user/:path*'],
 }
+export default middeleWare
+
 

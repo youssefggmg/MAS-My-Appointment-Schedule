@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 dotenv.config();
 
 
+
 interface MyParams extends Options {
     folder?: string;
     format?: string;

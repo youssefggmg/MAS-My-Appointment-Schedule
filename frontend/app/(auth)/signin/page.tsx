@@ -6,6 +6,8 @@ import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { signin } from '@/serveractions/auth';
 import Cookies from 'js-cookie';
+import { getRole } from '@/serveractions/auth';
+import { useRouter } from 'next/navigation';
 // Define types for form data
 interface SignInFormData {
   email: string;
@@ -15,6 +17,7 @@ interface SignInFormData {
 export default function SignIn() {
   const { register, handleSubmit, formState: { errors } } = useForm<SignInFormData>();
   const [error, seterror] = useState(null);
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<SignInFormData> = async (data) => {
     console.log(data);
@@ -27,6 +30,13 @@ export default function SignIn() {
     else {
       const token = resolt.data.token;
       Cookies.set('token', token, { expires: 1, secure: true, path: '/' });
+      const response = await getRole(token);
+      const role = response!.data
+      console.log(role);
+
+      if (role === "user") {
+        router.push('/user/dash');
+      }
     }
   };
 

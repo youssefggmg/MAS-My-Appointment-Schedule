@@ -10,6 +10,6 @@ const updateinfoValidator_1 = require("../validators/updateinfoValidator");
 const uploudImage_1 = __importDefault(require("../middlewares/uploudImage"));
 const userRouter = express_1.default.Router();
 userRouter.route("/user/info").get(tockenVerification_1.tockenVirification, usercontroller_1.userinfo);
-userRouter.route("/user/updateinfo").patch(tockenVerification_1.tockenVirification, updateinfoValidator_1.infovalidator, uploudImage_1.default.single("image"), usercontroller_1.updateuserinfo);
+userRouter.route("/user/updateinfo").patch(tockenVerification_1.tockenVirification, updateinfoValidator_1.infovalidator, uploudImage_1.default.single("file"), usercontroller_1.updateuserinfo);
 exports.default = userRouter;
 //# sourceMappingURL=userrout.js.map

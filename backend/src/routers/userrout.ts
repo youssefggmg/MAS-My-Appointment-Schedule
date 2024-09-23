@@ -6,6 +6,6 @@ import upload from "../middlewares/uploudImage";
 
 const userRouter = express.Router();
 userRouter.route("/user/info").get(tockenVirification,userinfo);
-userRouter.route("/user/updateinfo").patch(tockenVirification,infovalidator,upload.single("image"),updateuserinfo);
+userRouter.route("/user/updateinfo").patch(tockenVirification,infovalidator,upload.single("file"),updateuserinfo);
 
 export default userRouter

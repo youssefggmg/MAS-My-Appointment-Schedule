@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { signin } from '@/serveractions/auth';
+import Cookies from 'js-cookie';
 // Define types for form data
 interface SignInFormData {
   email: string;
@@ -24,8 +25,8 @@ export default function SignIn() {
       seterror(resolt.error);
     }
     else {
-      const token = resolt.data.token
-      localStorage.setItem("token", JSON.stringify(token));
+      const token = resolt.data.token;
+      Cookies.set('token', token, { expires: 1, secure: true, path: '/' });
     }
   };
 

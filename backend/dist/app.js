@@ -17,6 +17,7 @@ const appointments_1 = __importDefault(require("./routers/provider/appointments"
 const endsubscreption_1 = require("./cronejobs/endsubscreption");
 const userReport_1 = __importDefault(require("./routers/userReport"));
 const userReport_2 = __importDefault(require("./routers/userReport"));
+const validatetoken_1 = require("./routers/validatetoken");
 (0, db_1.default)();
 dotenv_1.default.config();
 const port = process.env.port || 3000;
@@ -32,6 +33,7 @@ app.use("/api", serviceRouter_1.default);
 app.use("/api", appointments_1.default);
 app.use("/api", userReport_1.default);
 app.use("/api", userReport_2.default);
+app.use("/api", validatetoken_1.validate);
 endsubscreption_1.crone.start();
 app.listen(port, () => {
     console.log(`server is running on port ${port}`);

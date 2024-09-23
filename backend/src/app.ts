@@ -12,6 +12,8 @@ import providerAppointmentsRoutere from "./routers/provider/appointments";
 import { crone } from "./cronejobs/endsubscreption";
 import reportRouter from "./routers/userReport";
 import providerReportRout from "./routers/userReport";
+import { validate } from "./routers/validatetoken";
+
 
 dbConnection();
 dotenv.config()
@@ -31,6 +33,7 @@ app.use("/api",servicerouter);
 app.use("/api",providerAppointmentsRoutere);
 app.use("/api",reportRouter);
 app.use("/api",providerReportRout);
+app.use("/api",validate);
 
 
 crone.start();

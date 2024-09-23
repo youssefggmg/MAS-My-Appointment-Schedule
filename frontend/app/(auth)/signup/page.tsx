@@ -1,8 +1,11 @@
 'use client'
-import {SubmitHandler, useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import Header from '@/components/ui/header';
 import Link from 'next/link';
 import { createAcount } from '@/serveractions/auth';
+import Cookies from "js-cookie"
+import { getRole } from '@/serveractions/auth';
+import { redirect } from 'next/navigation';
 
 
 export default function SignUp() {
@@ -13,12 +16,17 @@ export default function SignUp() {
     password: string;
   }
   const { register, handleSubmit, formState: { errors } } = useForm<SignUpFormData>();
-  
-  const onSubmit:SubmitHandler<SignUpFormData> = async (data:SignUpFormData) => {
+
+  const onSubmit: SubmitHandler<SignUpFormData> = async (data: SignUpFormData) => {
     console.log(data);
-    const resolt= await createAcount(data);
+    const resolt = await createAcount(data);
     const token = resolt.data.token;
-    localStorage.setItem("token",JSON.stringify(token));
+    Cookies.set('token', token, { expires: 1, secure: true, path: '/' });
+    const response = await getRole(token);
+    const role = response!.data
+    if (role === "user") {
+      redirect(`/user/dash`);
+    }
   };
 
   return (

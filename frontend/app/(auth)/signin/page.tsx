@@ -20,9 +20,7 @@ export default function SignIn() {
   const router = useRouter();
 
   const onSubmit: SubmitHandler<SignInFormData> = async (data) => {
-    console.log(data);
     const resolt = await signin(data);
-    console.log(resolt);
 
     if (resolt.success === false) {
       seterror(resolt.error);
@@ -32,7 +30,6 @@ export default function SignIn() {
       Cookies.set('token', token, { expires: 1, secure: true, path: '/' });
       const response = await getRole(token);
       const role = response!.data
-      console.log(role);
 
       if (role === "user") {
         router.push('/user/dash');

@@ -9,6 +9,6 @@ const servicerouter = express.Router();
 
 servicerouter.route("/service/create").post(tockenVirification,isProvider,serviceValidator,creatService);
 servicerouter.route("/service/delete/:id").delete(tockenVirification,isProvider,deleteservice);
-servicerouter.route("/service/update/:id").delete(tockenVirification,isProvider,updatedService,updateServiceDetailes);
+servicerouter.route("/service/update/:id").patch(tockenVirification,isProvider,updatedService,updateServiceDetailes);
 
 export default servicerouter;

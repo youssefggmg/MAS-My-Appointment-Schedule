@@ -12,6 +12,6 @@ const serviceController_1 = require("../../controllers/providers_controllers/ser
 const servicerouter = express_1.default.Router();
 servicerouter.route("/service/create").post(tockenVerification_1.tockenVirification, isProvider_1.isProvider, serviceValidator_1.serviceValidator, serviceController_1.creatService);
 servicerouter.route("/service/delete/:id").delete(tockenVerification_1.tockenVirification, isProvider_1.isProvider, serviceController_1.deleteservice);
-servicerouter.route("/service/update/:id").delete(tockenVerification_1.tockenVirification, isProvider_1.isProvider, updateServiceValidator_1.updatedService, serviceController_1.updateServiceDetailes);
+servicerouter.route("/service/update/:id").patch(tockenVerification_1.tockenVirification, isProvider_1.isProvider, updateServiceValidator_1.updatedService, serviceController_1.updateServiceDetailes);
 exports.default = servicerouter;
 //# sourceMappingURL=serviceRouter.js.map

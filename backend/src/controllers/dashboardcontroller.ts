@@ -1,22 +1,23 @@
 import { Request, Response } from "express";
-import { User } from "../models/user";
+import { User } from "../models/user"; 
 import { service } from "../models/service";
 import { StatusCodes } from "http-status-codes";
-import { BadRequestError, NotFoundError, UnAuthenticatedError } from "../errors/index";
 import { ObjectId } from "mongoose";
 
 // Interface for User
 interface IUser {
-    _id: string;
+    _id: ObjectId; 
     name: string;
     email: string;
     password: string;
     phoneNumber: string;
+    Image: string;
     role?: 'user' | 'provider' | 'admin';
     createdAt?: Date;
     cancelledAppointments?: number;
 }
 
+// Interface for Service
 interface IService {
     _id: ObjectId;
     providerId: ObjectId;
@@ -29,26 +30,25 @@ interface IService {
     contactMethod: string;
 }
 
+// Controller to fetch all services with provider info
 export const allproviders = async (req: Request, res: Response) => {
     try {
-        const providers: IUser[] = await User.find({
-            role: "provider"
-        });
+        // Fetch all available services with populated provider info
+        const allServices: IService[] = await service.find({ availability: true })
+            .populate({
+                path: 'providerId', // Populate provider info
+                select: 'name email phoneNumber Image' // Only select necessary fields
+            })
+            .lean();
 
-        if (providers.length === 0) {
-            return res.status(StatusCodes.NOT_FOUND).json({ error: "Sorry, we have no providers yet 😔😓" });
+        if (allServices.length === 0) {
+            return res.status(StatusCodes.NOT_FOUND).json({ error: "No available services found" });
         }
 
-        const allServices: IService[] = await service.find({
-            providerId: { $in: providers.map((provider) => provider._id) },
-            availability: true // Fetch only available services
-        }).populate('providerId', 'name email phoneNumber').lean();
-
-        // Respond with both the providers and their services
-        return res.status(StatusCodes.OK).json({ providers, allServices });
+        return res.status(StatusCodes.OK).json({ services: allServices });
         
     } catch (err: any) {
-        console.error("Error fetching providers or services:", err);
+        console.error("Error fetching services or providers:", err);
         return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: err.message });
     }
 };

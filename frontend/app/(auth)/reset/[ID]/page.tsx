@@ -19,9 +19,7 @@ export default function ChangePassword() {
     const id=params.ID as string;
 
     const onSubmit: SubmitHandler<ChangePasswordFormData> = async (data) => {
-        console.log(data);
         const response:any = await changePassword({password:data.password},id);
-        console.log(response);
         
         if (response.success) {
             setResult(response.data.message);

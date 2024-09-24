@@ -1,23 +1,29 @@
-import Image from "next/image"
+"use client"
+import Image from "next/image";
+import Modal from "./reportForm";
 
 interface ServiceCardProps {
-  imageUrl: string
-  title: string
-  description: string
-  price: number
+  imageUrl: string;
+  title: string;
+  description: string;
+  price: number;
+  serviceID: string;
+  worktime: string;
+  providerID: string;
+}
+const bookAppointmen = ()=>{
+  
 }
 
 export default function ServiceCard({
   imageUrl,
   title,
   description,
-  price
-}: ServiceCardProps = {
-  imageUrl: "/placeholder.svg?height=80&width=80",
-  title: "Service Title",
-  description: "This is a description of the service content. It should be a few sentences long to provide more context.",
-  price: 19.99
-}) {
+  price,
+  serviceID,
+  worktime,
+  providerID,
+}: ServiceCardProps) {
   return (
     <div className="w-full max-w-4xl mx-auto overflow-hidden"> {/* Increased max width */}
       <div className="flex flex-col sm:flex-row items-center sm:items-stretch border-2 border-black rounded-lg overflow-hidden bg-white shadow-md"> {/* Border color changed to black */}
@@ -42,17 +48,23 @@ export default function ServiceCard({
         {/* service actions */}
         <div className="w-full sm:w-auto p-4 flex flex-col justify-center items-center sm:items-end gap-2">
           <div className="flex flex-col items-center sm:items-end w-full">
-            <button className="w-full mb-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"> {/* Same width for buttons */}
+            {/* Show work time above buttons */}
+            <p className="text-sm sm:text-base text-gray-500 mb-2">{worktime}</p>
+
+            {/* buttons */}
+            <button
+              className="w-full mb-2 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
+              data-id={serviceID}
+              onClick={bookAppointmen}
+            >
               Book
             </button>
-            <button className="w-full px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600 transition-colors"> {/* Same width for buttons */}
-              Report
-            </button>
+            <Modal />
           </div>
           {/* price */}
           <p className="text-lg sm:text-2xl font-bold">${price.toFixed(2)}</p>
         </div>
       </div>
     </div>
-  )
+  ); 
 }

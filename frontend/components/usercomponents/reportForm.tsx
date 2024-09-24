@@ -1,7 +1,10 @@
 "use client"
 import { useState } from "react";
+interface providerid{
+    providerid:string
+}
 
-export default function Modal() {
+export default function Modal({providerid}:providerid) {
     const [isOpen, setIsOpen] = useState(false);
 
     const toggleModal = () => {
@@ -10,14 +13,12 @@ export default function Modal() {
 
     return (
         <>
-            {/* Toggle modal button */}
             <button
                 onClick={toggleModal}
                 className="w-full px-4 py-2 bg-red-400 text-black border font-bold border-black rounded hover:bg-gray-100 transition-colors"
             >
                 Report
             </button>
-
             {/* Modal */}
             {isOpen && (
                 <div className="fixed inset-0 flex justify-center items-center z-50 bg-gray-900 bg-opacity-50">

@@ -59,7 +59,7 @@ export default function ServiceCard({
             >
               Book
             </button>
-            <Modal />
+            <Modal providerid={providerID}/>
           </div>
           {/* price */}
           <p className="text-lg sm:text-2xl font-bold">${price.toFixed(2)}</p>

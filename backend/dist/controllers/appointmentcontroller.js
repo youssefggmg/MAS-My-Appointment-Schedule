@@ -16,30 +16,31 @@ const service_1 = require("../models/service");
 const http_status_codes_1 = require("http-status-codes");
 const index_1 = require("../errors/index");
 const bookAppointment = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    var _a;
     try {
-        const { providerId, note, serviceId } = req.body;
-        const user = req.user.user;
-        const theProvider = yield user.findById(providerId);
-        if (!theProvider) {
-            return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json({ error: new index_1.BadRequestError("provider not found") });
+        const { providerId, serviceId } = req.body;
+        const user = (_a = req.user) === null || _a === void 0 ? void 0 : _a.user;
+        if (!providerId || !serviceId) {
+            return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json({ error: "providerId and serviceId are required" });
         }
-        if (theProvider.role !== "provider") {
-            return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json({ error: new index_1.BadRequestError("provider not found") });
+        const theProvider = yield user_1.User.findById(providerId);
+        if (!theProvider || theProvider.role !== "provider") {
+            return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json({ error: "Provider not found or invalid role" });
         }
         const theService = yield service_1.service.findById(serviceId);
         if (!theService) {
-            return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json({ error: new index_1.BadRequestError("service not found") });
+            return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json({ error: "Service not found" });
         }
         const theAppointment = yield appointments_1.appointment.create({
             userId: user._id,
             providerId: providerId,
-            note
+            serviceId: serviceId,
         });
-        return res.status(http_status_codes_1.StatusCodes.CREATED).json({ appointment: theAppointment, message: "your appointment what created" });
+        return res.status(http_status_codes_1.StatusCodes.CREATED).json({ appointment: theAppointment, message: "Your appointment was created" });
     }
     catch (err) {
-        console.log(err);
-        res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR).json({ error: err.message });
+        console.error(err); // Consider replacing with proper logger in production
+        return res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR).json({ error: "Internal server error", details: err.message });
     }
 });
 exports.bookAppointment = bookAppointment;

@@ -6,32 +6,40 @@ import { Request, Response } from "express"
 import { BadRequestError, NotFoundError, UnAuthenticatedError } from "../errors/index"
 
 
+
 export const bookAppointment = async (req: Request, res: Response) => {
     try {
-        const { providerId, note, serviceId } = req.body;
-        const user = req.user.user;
-        const theProvider = await user.findById(providerId)
-        if (!theProvider) {
-            return res.status(StatusCodes.BAD_REQUEST).json({ error: new BadRequestError("provider not found") });
+        const { providerId, serviceId } = req.body;
+        const user = req.user?.user; 
+        if (!providerId || !serviceId) {
+            return res.status(StatusCodes.BAD_REQUEST).json({ error: "providerId and serviceId are required" });
         }
-        if (theProvider.role !== "provider") {
-            return res.status(StatusCodes.BAD_REQUEST).json({ error: new BadRequestError("provider not found") });
+
+        const theProvider = await User.findById(providerId);
+        
+        if (!theProvider || theProvider.role !== "provider") {
+            return res.status(StatusCodes.BAD_REQUEST).json({ error: "Provider not found or invalid role" });
         }
-        const theService = await service.findById(serviceId)
+
+        const theService = await service.findById(serviceId);
         if (!theService) {
-            return res.status(StatusCodes.BAD_REQUEST).json({ error: new BadRequestError("service not found") });
+            return res.status(StatusCodes.BAD_REQUEST).json({ error: "Service not found" });
         }
+
         const theAppointment = await appointment.create({
             userId: user._id,
             providerId: providerId,
-            note
+            serviceId: serviceId,
         });
-        return res.status(StatusCodes.CREATED).json({ appointment: theAppointment, message: "your appointment what created" });
+
+        return res.status(StatusCodes.CREATED).json({ appointment: theAppointment, message: "Your appointment was created" });
+
     } catch (err: any) {
-        console.log(err)
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: err.message })
+        console.error(err); // Consider replacing with proper logger in production
+        return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: "Internal server error", details: err.message });
     }
-}
+};
+
 
 export const cancelAppointment = async (req: Request, res: Response) => {
     try {

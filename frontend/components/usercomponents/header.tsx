@@ -17,7 +17,7 @@ export default function Navbar() {
     };
 
     return (
-        <nav className="bg-white fixed w-full z-20 top-0 W- border-b border-gray-200">
+        <nav className="bg-whit mb-6 w-full z-20 border-b border-gray-200">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <Link href="/user/dash" className="flex items-center space-x-3">
                     <Image

@@ -3,6 +3,7 @@ import { User } from "../models/user";
 import { service } from "../models/service";
 import { StatusCodes } from "http-status-codes";
 import { BadRequestError, NotFoundError, UnAuthenticatedError } from "../errors/index";
+import { ObjectId } from "mongoose";
 
 // Interface for User
 interface IUser {
@@ -16,17 +17,20 @@ interface IUser {
     cancelledAppointments?: number;
 }
 
-// Interface for Service
 interface IService {
-    _id: string;
-    providerId: string;
-    serviceName: string;
-    subscriptionActive: boolean;
+    _id: ObjectId;
+    providerId: ObjectId;
+    name: string;
+    description: string;
+    workTime: string;
+    city: string;
+    availability: boolean;
+    price: number;
+    contactMethod: string;
 }
 
 export const allproviders = async (req: Request, res: Response) => {
     try {
-        // Find all users with the 'provider' role
         const providers: IUser[] = await User.find({
             role: "provider"
         });
@@ -35,11 +39,10 @@ export const allproviders = async (req: Request, res: Response) => {
             return res.status(StatusCodes.NOT_FOUND).json({ error: "Sorry, we have no providers yet 😔😓" });
         }
 
-        // Find all services where providerId matches any of the provider IDs and the subscription is active
         const allServices: IService[] = await service.find({
             providerId: { $in: providers.map((provider) => provider._id) },
-            subscriptionActive: true
-        });
+            availability: true // Fetch only available services
+        }).populate('providerId', 'name email phoneNumber').lean();
 
         // Respond with both the providers and their services
         return res.status(StatusCodes.OK).json({ providers, allServices });

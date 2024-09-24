@@ -1,14 +1,14 @@
-import React from 'react'
+import React from 'react';
 
-const searchBra = () => {
+const SearchBar = () => {
     return (
-        <div>
+        <div className="ml-14">
             <form className="flex">
                 <input
                     type="text"
                     name="search"
                     placeholder="Search..."
-                    className="px-5 w-1/4 py-2 border rounded-lg "
+                    className="px-5 w-1/4 py-2 border rounded-lg"
                 />
                 <button
                     type="submit"
@@ -29,9 +29,29 @@ const searchBra = () => {
                         />
                     </svg>
                 </button>
+
+                {/* Small Additional Buttons */}
+                <button
+                    type="button"
+                    className="ml-2 px-2 py-1 text-xs bg-gray-200 text-black rounded-lg hover:bg-gray-300"
+                >
+                    provider Name
+                </button>
+                <button
+                    type="button"
+                    className="ml-2 px-2 py-1 text-xs bg-gray-200 text-black rounded-lg hover:bg-gray-300"
+                >
+                    service Name
+                </button>
+                <button
+                    type="button"
+                    className="ml-2 px-2 py-1 text-xs bg-gray-200 text-black rounded-lg hover:bg-gray-300"
+                >
+                    availability
+                </button>
             </form>
         </div>
-    )
-}
+    );
+};
 
-export default searchBra
+export default SearchBar;

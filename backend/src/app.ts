@@ -13,6 +13,9 @@ import { crone } from "./cronejobs/endsubscreption";
 import reportRouter from "./routers/userReport";
 import providerReportRout from "./routers/userReport";
 import { validate } from "./routers/validatetoken";
+import xss from "xss-clean";
+import mongoSanitize from "express-mongo-sanitize";
+import rateLimit from "express-rate-limit";
 
 
 dbConnection();
@@ -22,6 +25,8 @@ const port = process.env.port ||3000;
 
 const app = express();
 app.use(express.json());
+app.use(mongoSanitize());
+app.use(xss());
 
 app.use("/api",authrouter);
 app.use("/api",dashboardrouter);

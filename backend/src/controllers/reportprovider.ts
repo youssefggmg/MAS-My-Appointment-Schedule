@@ -31,8 +31,9 @@ export const reportProvider = async (req: Request, res: Response) => {
             reason,
             type: "client",
         })
+        res.status(StatusCodes.CREATED).json(report);
     } catch (err: any) {
-        console.log(err)
+        console.log(err.message)
         res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: err.message })
     }
 }

@@ -20,6 +20,7 @@ const userReport_2 = __importDefault(require("./routers/userReport"));
 const validatetoken_1 = require("./routers/validatetoken");
 const xss_clean_1 = __importDefault(require("xss-clean"));
 const express_mongo_sanitize_1 = __importDefault(require("express-mongo-sanitize"));
+const cors_1 = __importDefault(require("cors"));
 (0, db_1.default)();
 dotenv_1.default.config();
 const port = process.env.port || 3000;
@@ -27,6 +28,9 @@ const app = (0, express_1.default)();
 app.use(express_1.default.json());
 app.use((0, express_mongo_sanitize_1.default)());
 app.use((0, xss_clean_1.default)());
+app.use((0, cors_1.default)({
+    origin: 'http://localhost:3000'
+}));
 app.use("/api", authrouter_1.default);
 app.use("/api", dashboardrout_1.default);
 app.use("/api", searshrouter_1.default);

@@ -1,20 +1,23 @@
 
 export const book = async (providerID: string, token: string,serviceID:string) => {
     try {
-        const response = await fetch('https://example.com/api/appointment/book', {
+        const response = await fetch('http://localhost:3060/api/appointment/book', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             },
             body: JSON.stringify({
-                providerID: providerID,
-                serviceID: serviceID
+                providerId: providerID,
+                serviceId: serviceID
                 })
         })
         const data = await response.json()
         if (!data.ok) {
             throw new Error(data.message)
+        }
+        if (data) {
+            return{succes:true}
         }
 
     } catch (error: any) {

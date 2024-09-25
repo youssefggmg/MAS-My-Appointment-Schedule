@@ -66,15 +66,26 @@ export const cancelAppointment = async (req: Request, res: Response) => {
     }
 }
 
-export const allApoointmets = async (req: Request, res: Response) => {
+export const allAppointments = async (req: Request, res: Response) => {
     try {
         const userID = req.user.user._id;
-        const allApoointmets = await appointment.find({
+
+        // Populate the provider (for the image) and service information
+        const allAppointments = await appointment.find({
             userId: userID
         })
-        return res.status(StatusCodes.OK).json({ allApoointmets });
+        .populate({
+            path: 'providerId', 
+            select: 'Image', 
+        })
+        .populate({
+            path: 'serviceId', 
+            select: 'name description price', 
+        });
+
+        return res.status(StatusCodes.OK).json({ allAppointments });
     } catch (err: any) {
-        console.log(err)
-        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: err.message })
+        console.log(err);
+        res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ error: err.message });
     }
-}
+};

@@ -9,7 +9,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.allApoointmets = exports.cancelAppointment = exports.bookAppointment = void 0;
+exports.allAppointments = exports.cancelAppointment = exports.bookAppointment = void 0;
 const appointments_1 = require("../models/appointments");
 const user_1 = require("../models/user");
 const service_1 = require("../models/service");
@@ -69,18 +69,27 @@ const cancelAppointment = (req, res) => __awaiter(void 0, void 0, void 0, functi
     }
 });
 exports.cancelAppointment = cancelAppointment;
-const allApoointmets = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const allAppointments = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const userID = req.user.user._id;
-        const allApoointmets = yield appointments_1.appointment.find({
+        // Populate the provider (for the image) and service information
+        const allAppointments = yield appointments_1.appointment.find({
             userId: userID
+        })
+            .populate({
+            path: 'providerId',
+            select: 'Image',
+        })
+            .populate({
+            path: 'serviceId',
+            select: 'name description price',
         });
-        return res.status(http_status_codes_1.StatusCodes.OK).json({ allApoointmets });
+        return res.status(http_status_codes_1.StatusCodes.OK).json({ allAppointments });
     }
     catch (err) {
         console.log(err);
         res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR).json({ error: err.message });
     }
 });
-exports.allApoointmets = allApoointmets;
+exports.allAppointments = allAppointments;
 //# sourceMappingURL=appointmentcontroller.js.map

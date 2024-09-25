@@ -3,17 +3,16 @@ import Header from "@/components/usercomponents/header";
 import SearchBar from "@/components/usercomponents/searchBare";
 import ServiceCard from "@/components/usercomponents/service-card";
 import { cookies } from "next/headers";
+import Footer from "@/components/usercomponents/footer";
 
 export const metadata: Metadata = {
     title: "Home Page",
     description: "This is the user home page",
 };
-
+const cookieStore = cookies();
+const token = cookieStore.get("token")?.value || "No token found";
 // Fetch services data from the API
 const allservices = async () => {
-    // Get the token from cookies inside the async function
-    const cookieStore = cookies();
-    const token = cookieStore.get("token")?.value || "No token found";
 
     const response = await fetch("http://localhost:3060/api/dash", {
         method: "GET",
@@ -33,8 +32,7 @@ const allservices = async () => {
 
 const Dash = async () => {
     const allServices = await allservices();
-    console.log(allServices.services[0].workTime);
-    
+    const token = cookieStore.get("token")?.value || "No token found";
 
     return (
         <>
@@ -52,7 +50,6 @@ const Dash = async () => {
                             No services available at the moment.
                         </p>
                     ) : (
-                        // Loop through each service and render a ServiceCard
                         allServices.services.map((service: any) => (
                             <ServiceCard
                                 key={service._id}
@@ -63,11 +60,13 @@ const Dash = async () => {
                                 serviceID={service._id}
                                 worktime={service.workTime}
                                 providerID={service.providerId._id}
+                                token={token}
                             />
                         ))
                     )}
                 </div>
             </div>
+                <Footer/>
         </>
     );
 };

@@ -10,7 +10,7 @@ export default function Navbar() {
     const userinfo = JSON.parse(Cookies.get("user") || "{}");
     const userimage = userinfo.Image;
     console.log(userinfo.Image);
-    
+
 
     const toggleMenu = () => {
         setIsOpen(!isOpen);
@@ -28,13 +28,15 @@ export default function Navbar() {
                     />
                 </Link>
                 <div className="flex md:order-2 space-x-3 md:space-x-0">
-                    <Image
-                        src={userimage} 
-                        width={50}
-                        height={50}
-                        alt="User profile"
-                        className="rounded-full"
-                    />
+                    <Link href="/user/profile">
+                        <Image
+                            src={userimage}
+                            width={50}
+                            height={50}
+                            alt="User profile"
+                            className="rounded-full"
+                        />
+                    </Link>
                     <button
                         onClick={toggleMenu}
                         type="button"
@@ -54,7 +56,7 @@ export default function Navbar() {
                             <Link href="/" className="block py-2 px-3 text-black rounded hover:bg-gray-100 md:hover:bg-transparent md:p-0" aria-current="page">Home</Link>
                         </li>
                         <li>
-                            <Link href="/appointments" className="block py-2 px-3 text-black rounded hover:bg-gray-100 md:hover:bg-transparent md:p-0">My Appointments</Link>
+                            <Link href="/user/appointments" className="block py-2 px-3 text-black rounded hover:bg-gray-100 md:hover:bg-transparent md:p-0">My Appointments</Link>
                         </li>
                         <li>
                             <Link href="/reports" className="block py-2 px-3 text-black rounded hover:bg-gray-100 md:hover:bg-transparent md:p-0">Reports</Link>

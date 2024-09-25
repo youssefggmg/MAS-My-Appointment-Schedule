@@ -38,9 +38,10 @@ const reportProvider = (req, res) => __awaiter(void 0, void 0, void 0, function*
             reason,
             type: "client",
         });
+        res.status(http_status_codes_1.StatusCodes.CREATED).json(report);
     }
     catch (err) {
-        console.log(err);
+        console.log(err.message);
         res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR).json({ error: err.message });
     }
 });

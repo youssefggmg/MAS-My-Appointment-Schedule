@@ -16,6 +16,7 @@ import { validate } from "./routers/validatetoken";
 import xss from "xss-clean";
 import mongoSanitize from "express-mongo-sanitize";
 import rateLimit from "express-rate-limit";
+import cors from "cors"
 
 
 dbConnection();
@@ -27,6 +28,9 @@ const app = express();
 app.use(express.json());
 app.use(mongoSanitize());
 app.use(xss());
+app.use(cors({
+    origin: 'http://localhost:3000'
+}));
 
 app.use("/api",authrouter);
 app.use("/api",dashboardrouter);

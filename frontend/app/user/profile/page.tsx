@@ -14,8 +14,10 @@ const fetchUserIndo = async () => {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
-            "Authorization": `Bearer ${token}`
-        }
+            "Authorization": `Bearer ${token}`,
+            'Cache-Control': 'no-store'
+        },
+        cache: 'no-store',
     })
     const data = await response.json();
     return data;
@@ -42,7 +44,6 @@ const Profile = async () => {
                 phoneNumber={phoneNumber}
                 profilImage={Image}
                 createdAt={createdAt}
-                id={_id}
                 token={token}
             />
         </>

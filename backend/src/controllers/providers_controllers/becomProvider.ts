@@ -37,14 +37,12 @@ export const createProviderInfo = async (req: Request, res: Response) => {
         const { jobTitle, aboutMe, availability } = req.body;
         const user = req.user.user;
 
-        // Ensure the user is authenticated
         if (!user) {
             throw new BadRequestError("User not authenticated");
         }
 
-        // Create a new provider information document
         const providerInfo = await Provider.create({
-            userId: user.user._id,
+            providerId: user._id,
             jobTitle,
             aboutMe,
             availability

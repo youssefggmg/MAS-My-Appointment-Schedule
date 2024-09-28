@@ -41,13 +41,11 @@ const createProviderInfo = (req, res) => __awaiter(void 0, void 0, void 0, funct
         }
         const { jobTitle, aboutMe, availability } = req.body;
         const user = req.user.user;
-        // Ensure the user is authenticated
         if (!user) {
             throw new index_1.BadRequestError("User not authenticated");
         }
-        // Create a new provider information document
         const providerInfo = yield providerinfo_1.Provider.create({
-            userId: user.user._id,
+            providerId: user._id,
             jobTitle,
             aboutMe,
             availability

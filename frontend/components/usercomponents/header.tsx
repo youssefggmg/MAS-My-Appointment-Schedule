@@ -53,7 +53,7 @@ export default function Navbar() {
                 <div className={`items-center justify-between ${isOpen ? 'flex' : 'hidden'} w-full md:flex md:w-auto md:order-1`} id="navbar-sticky">
                     <ul className="flex flex-col p-4 md:p-0 mt-4 font-medium border border-gray-100 rounded-lg bg-white md:space-x-8 md:flex-row md:mt-0 md:border-0 text-lg font-roboto">
                         <li>
-                            <Link href="/" className="block py-2 px-3 text-black rounded hover:bg-gray-100 md:hover:bg-transparent md:p-0" aria-current="page">Home</Link>
+                            <Link href="/user/profile" className="block py-2 px-3 text-black rounded hover:bg-gray-100 md:hover:bg-transparent md:p-0" aria-current="page">Home</Link>
                         </li>
                         <li>
                             <Link href="/user/appointments" className="block py-2 px-3 text-black rounded hover:bg-gray-100 md:hover:bg-transparent md:p-0">My Appointments</Link>

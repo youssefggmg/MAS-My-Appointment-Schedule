@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { update } from "@/serveractions/updateUserinfo";
+import {useRouter} from "next/router"
 
 interface UserInfoFormData {
     name?: string; 
@@ -28,8 +29,8 @@ const UserInfoForm: React.FC<UserProps> = ({ token }) => {
         setLoading(true); 
         try {
             const response = await update(data, token);
-            console.log(response); // Handle response if needed
-            setModalOpen(false); 
+            console.log(response);
+            setModalOpen(false);
         } catch (error) {
             console.error("Error updating user info:", error); 
         } finally {
@@ -40,7 +41,7 @@ const UserInfoForm: React.FC<UserProps> = ({ token }) => {
     return (
         <div>
             <button
-                className="bg-pink-500 active:bg-pink-600 uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none ease-linear transition-all duration-150"
+                className="bg-[#20C997] active:bg-[#20C997] uppercase text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded outline-none focus:outline-none ease-linear transition-all duration-150"
                 type="button"
                 onClick={() => setModalOpen(true)} // Open modal on button click
             >
@@ -145,7 +146,7 @@ const UserInfoForm: React.FC<UserProps> = ({ token }) => {
                                     <button
                                         type="submit"
                                         disabled={loading} // Disable button when loading
-                                        className={`w-full bg-pink-500 active:bg-pink-600 text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded ease-linear transition-all duration-150 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
+                                        className={`w-full bg-[#20C997] active:bg-[#20C997] text-white font-bold hover:shadow-md shadow text-xs px-4 py-2 rounded ease-linear transition-all duration-150 ${loading ? 'opacity-50 cursor-not-allowed' : ''}`}
                                     >
                                         {loading ? (
                                             <svg

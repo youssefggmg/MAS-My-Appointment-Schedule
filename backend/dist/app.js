@@ -14,6 +14,7 @@ const becomeProviderRouter_1 = __importDefault(require("./routers/becomeProvider
 const serviceRouter_1 = __importDefault(require("./routers/provider/serviceRouter"));
 const db_1 = __importDefault(require("./models/db"));
 const appointments_1 = __importDefault(require("./routers/provider/appointments"));
+const providerInfo_1 = __importDefault(require("./routers/providerInfo"));
 const endsubscreption_1 = require("./cronejobs/endsubscreption");
 const userReport_1 = __importDefault(require("./routers/userReport"));
 const userReport_2 = __importDefault(require("./routers/userReport"));
@@ -42,6 +43,7 @@ app.use("/api", appointments_1.default);
 app.use("/api", userReport_1.default);
 app.use("/api", userReport_2.default);
 app.use("/api", validatetoken_1.validate);
+app.use("/api", providerInfo_1.default);
 endsubscreption_1.crone.start();
 app.listen(port, () => {
     console.log(`server is running on port ${port}`);

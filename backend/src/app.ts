@@ -9,6 +9,7 @@ import becomeProviderRouter from "./routers/becomeProviderRouter";
 import servicerouter from "./routers/provider/serviceRouter";
 import dbConnection from "./models/db";
 import providerAppointmentsRoutere from "./routers/provider/appointments";
+import providerInfo from "./routers/providerInfo";
 import { crone } from "./cronejobs/endsubscreption";
 import reportRouter from "./routers/userReport";
 import providerReportRout from "./routers/userReport";
@@ -43,6 +44,7 @@ app.use("/api",providerAppointmentsRoutere);
 app.use("/api",reportRouter);
 app.use("/api",providerReportRout);
 app.use("/api",validate);
+app.use("/api",providerInfo);
 
 
 crone.start();

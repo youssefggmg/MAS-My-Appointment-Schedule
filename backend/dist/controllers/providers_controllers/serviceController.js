@@ -9,12 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteservice = exports.updateServiceDetailes = exports.creatService = void 0;
+exports.deleteservice = exports.updateServiceDetailes = exports.createService = void 0;
 const service_1 = require("../../models/service");
+const user_1 = require("../../models/user");
 const http_status_codes_1 = require("http-status-codes");
 const express_validator_1 = require("express-validator");
 // post
-const creatService = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const createService = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const errors = (0, express_validator_1.validationResult)(req);
         const { name, workTime, description, city, price, contactMethod } = req.body;
@@ -22,7 +23,7 @@ const creatService = (req, res) => __awaiter(void 0, void 0, void 0, function* (
         if (!errors.isEmpty()) {
             return res.status(http_status_codes_1.StatusCodes.BAD_REQUEST).json({ message: "Invalid data", errors: errors.array() });
         }
-        const newservice = yield service_1.service.create({
+        const newService = yield service_1.service.create({
             providerId,
             name,
             description,
@@ -31,14 +32,17 @@ const creatService = (req, res) => __awaiter(void 0, void 0, void 0, function* (
             price,
             contactMethod,
         });
-        res.status(http_status_codes_1.StatusCodes.CREATED).json({ message: "Service created successfully", newservice });
+        yield user_1.User.findByIdAndUpdate(providerId, {
+            $push: { services: newService._id }
+        });
+        res.status(http_status_codes_1.StatusCodes.CREATED).json({ message: "Service created successfully", newService });
     }
     catch (err) {
         console.log(err);
         res.status(http_status_codes_1.StatusCodes.INTERNAL_SERVER_ERROR).json({ error: err.message });
     }
 });
-exports.creatService = creatService;
+exports.createService = createService;
 // patch
 const updateServiceDetailes = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
@@ -72,11 +76,12 @@ const deleteservice = (req, res) => __awaiter(void 0, void 0, void 0, function* 
     try {
         const serviceId = req.params.id;
         const providerID = req.user.user._id;
+        console.log(providerID);
         const Service = yield service_1.service.findById(serviceId);
         if (!Service) {
             return res.status(http_status_codes_1.StatusCodes.NOT_FOUND).json({ message: "Service not found" });
         }
-        if (Service.providerId !== providerID) {
+        if (!Service.providerId.equals(providerID)) {
             return res.status(http_status_codes_1.StatusCodes.FORBIDDEN).json({ message: "You are not authorized to delete this service" });
         }
         const deletedService = yield service_1.service.findByIdAndDelete(serviceId);

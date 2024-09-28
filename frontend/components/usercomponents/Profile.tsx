@@ -8,11 +8,10 @@ interface ProfilePageProps {
     phoneNumber: string;
     profilImage: string;
     createdAt: string;
-    id: string
-    token:string
+    token: string;
 }
 
-const ProfilePage: React.FC<ProfilePageProps> = ({ name, email, phoneNumber, profilImage, createdAt, id,token }) => {
+const ProfilePage: React.FC<ProfilePageProps> = ({ name, email, phoneNumber, profilImage, createdAt, token }) => {
     return (
         <div className="profile-page">
             {/* Main Profile Content */}
@@ -34,28 +33,17 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ name, email, phoneNumber, pro
                                     </div>
                                 </div>
 
-                                {/* Social Stats */}
-                                <div className="w-full lg:w-4/12 px-4 flex justify-center lg:justify-start mt-4 lg:mt-0">
-                                    <div className="flex justify-center py-4">
-                                        <div className="mr-4 p-3 text-center">
-                                            <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">22</span>
-                                            <span className="text-sm text-blueGray-400">Friends</span>
-                                        </div>
-                                        <div className="mr-4 p-3 text-center">
-                                            <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">10</span>
-                                            <span className="text-sm text-blueGray-400">Photos</span>
-                                        </div>
-                                        <div className="p-3 text-center">
-                                            <span className="text-xl font-bold block uppercase tracking-wide text-blueGray-600">89</span>
-                                            <span className="text-sm text-blueGray-400">edit info</span>
-                                        </div>
+                                {/* Account Creation Time */}
+                                <div className="w-full lg:w-3/12 px-4 flex justify-center lg:justify-start mt-4 lg:mt-0">
+                                    <div className="text-center lg:text-left">
+                                        <p className="text-sm text-blueGray-400">Account created on:</p>
+                                        <span className="text-lg font-semibold text-blueGray-700">{createdAt.substring(0,10)}</span>
                                     </div>
                                 </div>
 
-                                {/* Connect Button */}
+                                {/* Edit Info Button */}
                                 <div className="w-full lg:w-3/12 px-4 lg:text-right mt-4 lg:mt-0 flex justify-center lg:justify-end">
-                                    <UserInfoForm
-                                    token={token}/>
+                                    <UserInfoForm token={token} />
                                 </div>
                             </div>
 
@@ -63,15 +51,12 @@ const ProfilePage: React.FC<ProfilePageProps> = ({ name, email, phoneNumber, pro
                             <div className="text-center mt-12">
                                 <h3 className="text-4xl font-semibold leading-normal text-blueGray-700 mb-2">{name}</h3>
                                 <div className="text-sm leading-normal mt-0 mb-2 text-blueGray-400 font-bold uppercase">
-                                    <i className="fas fa-map-marker-alt mr-2 text-lg text-blueGray-400"></i>
+                                    <i className="fas fa-envelope mr-2 text-lg text-blueGray-400"></i>
                                     {email}
                                 </div>
                                 <div className="mb-2 text-blueGray-600 mt-10">
-                                    <i className="fas fa-briefcase mr-2 text-lg text-blueGray-400"></i>
+                                    <i className="fas fa-phone-alt mr-2 text-lg text-blueGray-400"></i>
                                     {phoneNumber}
-                                </div>
-                                <div className="mb-2 text-blueGray-600">
-                                    <i className="fas fa-university mr-2 text-lg text-blueGray-400"></i>
                                 </div>
                             </div>
 

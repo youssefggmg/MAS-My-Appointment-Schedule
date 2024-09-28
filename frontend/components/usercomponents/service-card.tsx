@@ -3,6 +3,7 @@ import Image from "next/image";
 import Modal from "./reportForm";
 import { book } from "@/serveractions/bookeapointment";
 import { useState } from "react";
+import Link from "next/link";
 
 interface ServiceCardProps {
   imageUrl: string;
@@ -41,7 +42,7 @@ export default function ServiceCard({
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto overflow-hidden">
+    <Link href={`/user/providerProfile/${providerID}`} className="w-full max-w-4xl mx-auto overflow-hidden">
       <div className="flex flex-col sm:flex-row items-center sm:items-stretch border-2 border-black rounded-lg overflow-hidden bg-white shadow-md">
         {/* service image */}
         <div className="w-full sm:w-auto p-4 flex items-center justify-center sm:justify-start">
@@ -86,6 +87,6 @@ export default function ServiceCard({
           <p className="text-lg sm:text-2xl font-bold">${price.toFixed(2)}</p>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

@@ -2,8 +2,8 @@ import { model, Schema } from "mongoose";
 
 
 const appointmentSchema = new Schema({
-    userId: { type: Schema.Types.ObjectId, ref: 'User', required: true },
-    providerId: { type: Schema.Types.ObjectId, ref: 'Provider', required: true },
+    userId: { type: Schema.Types.ObjectId, ref: 'user', required: true },
+    providerId: { type: Schema.Types.ObjectId, ref: 'user', required: true },
     serviceId: { type: Schema.Types.ObjectId, ref: 'Service', required: true },
     date: { type: Date},
     notes: { type: String },

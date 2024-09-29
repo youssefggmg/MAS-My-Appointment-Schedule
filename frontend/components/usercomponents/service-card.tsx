@@ -42,10 +42,10 @@ export default function ServiceCard({
   };
 
   return (
-    <Link href={`/user/providerProfile/${providerID}`} className="w-full max-w-4xl mx-auto overflow-hidden">
+    <div className="w-full max-w-4xl mx-auto overflow-hidden">
       <div className="flex flex-col sm:flex-row items-center sm:items-stretch border-2 border-black rounded-lg overflow-hidden bg-white shadow-md">
         {/* service image */}
-        <div className="w-full sm:w-auto p-4 flex items-center justify-center sm:justify-start">
+        <Link href={`/user/providerProfile/${providerID}`}  className="w-full sm:w-auto p-4 flex items-center justify-center sm:justify-start">
           <Image
             alt={title}
             className="object-cover rounded-lg"
@@ -56,7 +56,7 @@ export default function ServiceCard({
               objectFit: "cover",
             }}
           />
-        </div>
+        </Link>
         {/* service content */}
         <div className="flex-grow p-4 flex flex-col justify-center">
           <h2 className="text-xl sm:text-2xl font-bold mb-2">{title}</h2>
@@ -87,6 +87,6 @@ export default function ServiceCard({
           <p className="text-lg sm:text-2xl font-bold">${price.toFixed(2)}</p>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }

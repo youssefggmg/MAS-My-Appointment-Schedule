@@ -50,15 +50,15 @@ const cancelAppointment = (req, res) => __awaiter(void 0, void 0, void 0, functi
         const user = req.user.user;
         const theAppointment = yield appointments_1.appointment.findById(appointmentId);
         const theUser = yield user_1.User.findById(user._id);
+        if (!theAppointment) {
+            return res.status(http_status_codes_1.StatusCodes.NOT_FOUND).json({ error: new index_1.NotFoundError("appointment not found") });
+        }
         // nocapp means number numberOfCancelledAppointments
         const nocapp = { cancelledAppointments: user.cancelledAppointments++ };
         if (nocapp > 3) {
             return res.status(http_status_codes_1.StatusCodes.NOT_FOUND).json({ error: new index_1.NotFoundError("you have reatched you limet you cannot cancella nother appointment") });
         }
         const status = { status: "cancelled" };
-        if (!theAppointment) {
-            return res.status(http_status_codes_1.StatusCodes.NOT_FOUND).json({ error: new index_1.NotFoundError("appointment not found") });
-        }
         const cancel = yield appointments_1.appointment.findByIdAndUpdate({ _id: appointmentId }, { $set: status });
         const Cuser = yield user_1.User.findByIdAndUpdate({ _id: user._id }, { $set: nocapp });
         return res.status(http_status_codes_1.StatusCodes.OK).json({ message: "appointment cancelled" });

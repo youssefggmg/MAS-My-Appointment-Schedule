@@ -7,7 +7,7 @@ const appointmentSchema = new Schema({
     serviceId: { type: Schema.Types.ObjectId, ref: 'Service', required: true },
     date: { type: Date},
     notes: { type: String },
-    status: { type: String, enum: ['pending', 'accepted', 'cancelled'], default: 'pending' },
+    status: { type: String, enum: ['pending', 'accepted', 'canceled'], default: 'pending' },
     createdAt: { type: Date, default: Date.now }
 });
 

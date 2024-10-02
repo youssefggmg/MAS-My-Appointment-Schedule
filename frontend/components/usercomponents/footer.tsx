@@ -18,7 +18,7 @@ export default function Footer() {
     };
 
     return (
-        <footer className="bg-blue-600 mt-10 text-white p-4 md:p-6">
+        <footer className="bg-blue-600 mt-10 text-white p-4 md:p-6 fixed bottom-0 left-0 right-0 ">
             <div className="container mx-auto">
                 <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
                     <div className="flex items-center mb-4 md:mb-0">

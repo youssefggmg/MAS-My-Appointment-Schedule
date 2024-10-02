@@ -47,16 +47,15 @@ export const cancelAppointment = async (req: Request, res: Response) => {
         const user = req.user.user;
         const theAppointment = await appointment.findById(appointmentId);
         const theUser = await User.findById(user._id);
+        if (!theAppointment) {
+            return res.status(StatusCodes.NOT_FOUND).json({ error: new NotFoundError("appointment not found") });
+        }
         // nocapp means number numberOfCancelledAppointments
         const nocapp: any = { cancelledAppointments: user.cancelledAppointments++ };
         if (nocapp > 3) {
             return res.status(StatusCodes.NOT_FOUND).json({ error: new NotFoundError("you have reatched you limet you cannot cancella nother appointment") });
         }
-
         const status = { status: "cancelled" }
-        if (!theAppointment) {
-            return res.status(StatusCodes.NOT_FOUND).json({ error: new NotFoundError("appointment not found") });
-        }
         const cancel = await appointment.findByIdAndUpdate({ _id: appointmentId }, { $set: status })
         const Cuser = await User.findByIdAndUpdate({ _id: user._id }, { $set: nocapp })
         return res.status(StatusCodes.OK).json({ message: "appointment cancelled" });

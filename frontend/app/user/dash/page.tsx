@@ -9,10 +9,8 @@ export const metadata: Metadata = {
     title: "Home Page",
     description: "This is the user home page",
 };
-const cookieStore = cookies();
-const token = cookieStore.get("token")?.value || "No token found";
 // Fetch services data from the API
-const allservices = async () => {
+const allservices = async (token:string) => {
 
     const response = await fetch("http://localhost:3060/api/dash", {
         method: "GET",
@@ -21,7 +19,7 @@ const allservices = async () => {
             Authorization: `Bearer ${token}`,
         },
     });
-
+    
     if (!response.ok) {
         console.log("Failed to fetch services");
     }
@@ -31,8 +29,9 @@ const allservices = async () => {
 };
 
 const Dash = async () => {
-    const allServices = await allservices();
+    const cookieStore = cookies();
     const token = cookieStore.get("token")?.value || "No token found";
+    const allServices = await allservices(token);
 
     return (
         <>

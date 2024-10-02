@@ -9,7 +9,6 @@ export default function Navbar() {
     const [isOpen, setIsOpen] = useState(false);
     const userinfo = JSON.parse(Cookies.get("user") || "{}");
     const userimage = userinfo.Image;
-    console.log(userinfo.Image);
 
 
     const toggleMenu = () => {
@@ -56,7 +55,7 @@ export default function Navbar() {
                             <Link href="/user/profile" className="block py-2 px-3 text-black rounded hover:bg-gray-100 md:hover:bg-transparent md:p-0" aria-current="page">Home</Link>
                         </li>
                         <li>
-                            <Link href="/user/appointments" className="block py-2 px-3 text-black rounded hover:bg-gray-100 md:hover:bg-transparent md:p-0">My Appointments</Link>
+                            <Link href="/user/myAppointments" className="block py-2 px-3 text-black rounded hover:bg-gray-100 md:hover:bg-transparent md:p-0">My Appointments</Link>
                         </li>
                         <li>
                             <Link href="/reports" className="block py-2 px-3 text-black rounded hover:bg-gray-100 md:hover:bg-transparent md:p-0">Reports</Link>

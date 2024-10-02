@@ -7,9 +7,7 @@ export const metadata: Metadata = {
     title: "Profile Page",
     description: "This is the user profile page",
 };
-const cookieStore = cookies();
-const token = cookieStore.get("token")?.value || "No token found";
-const fetchUserIndo = async () => {
+const fetchUserIndo = async (token:string) => {
     const response = await fetch('http://localhost:3060/api/user/info', {
         method: 'GET',
         headers: {
@@ -25,6 +23,8 @@ const fetchUserIndo = async () => {
 
 
 const Profile = async () => {
+    const cookieStore = cookies();
+    const token = cookieStore.get("token")?.value || "No token found";
     const {
         _id,
         name,
@@ -32,7 +32,7 @@ const Profile = async () => {
         phoneNumber,
         Image,
         createdAt,
-    } = await fetchUserIndo();
+    } = await fetchUserIndo(token);
 
 
     return (
